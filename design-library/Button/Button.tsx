@@ -2,19 +2,21 @@ import React, { FC } from "react";
 
 type Props = {
   name: string;
-  type: "primary" | "secondary";
-  onClick: () => void;
+  type: "button" | "submit" | "reset";
+  buttonType: "primary" | "secondary";
+  onClick?: () => void;
   disabled?: boolean;
 };
 const Button: FC<Props> = ({
   name,
-  type = "primary",
-  onClick,
+  type = "button",
+  buttonType = "primary",
+  onClick = () => {},
   disabled = false,
 }) => {
   return (
     <div>
-      <button className={type} onClick={onClick} disabled={disabled}>
+      <button className={buttonType} onClick={onClick} disabled={disabled}>
         {name}
       </button>
       <style jsx>{`
@@ -24,6 +26,7 @@ const Button: FC<Props> = ({
           border: none;
           border-radius: 0.5rem;
           height: 41px;
+          min-width: 100px;
         }
         .primary:hover {
           background: rgba(14, 72, 141, 0.8);
@@ -35,6 +38,7 @@ const Button: FC<Props> = ({
           background: rgba(14, 72, 141, 0.34);
         }
         .secondary {
+          min-width: 100px;
           background: #fff;
           color: #0e488d;
           border: 3px solid #0e488d;
