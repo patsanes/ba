@@ -3,6 +3,9 @@
 import React, { useState } from "react";
 import Layout from "../components/Layout";
 import Router from "next/router";
+import Button from "../design-library/Button/Button";
+import Input from "../design-library/Input/Input";
+import TextArea from "../design-library/TextArea/TextArea";
 
 const Draft: React.FC = () => {
   const [title, setTitle] = useState("");
@@ -28,27 +31,38 @@ const Draft: React.FC = () => {
       <div>
         <form onSubmit={submitData}>
           <h1>New Draft</h1>
-          <input
+          <Input
             autoFocus
             onChange={(e) => setTitle(e.target.value)}
             placeholder="Title"
             type="text"
             value={title}
+            inputType="primary"
           />
-          <textarea
+          <TextArea
             cols={50}
             onChange={(e) => setContent(e.target.value)}
             placeholder="Content"
             rows={8}
             value={content}
           />
-          <input disabled={!content || !title} type="submit" value="Create" />
+          <Button
+            name="Create"
+            type="submit"
+            buttonType="primary"
+            disabled={!content || !title}
+          />
           <a className="back" href="#" onClick={() => Router.push("/")}>
             or Cancel
           </a>
         </form>
       </div>
       <style jsx>{`
+        form {
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+        }
         .page {
           background: var(--geist-background);
           padding: 3rem;
