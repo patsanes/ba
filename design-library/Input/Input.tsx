@@ -45,7 +45,7 @@ const Input: FC<Props> = ({
           outline: rgba(14, 72, 141, 0.8);
         }
         .secondary {
-          padding: 8px;
+          padding: 0 8px;
           width: 100%;
           background: none;
           border: 1.5px solid #0e488d;
