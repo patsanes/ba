@@ -3,6 +3,7 @@ import React from "react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { signOut, useSession } from "next-auth/react";
+import Button from "../design-library/Button/Button";
 
 const Header: React.FC = () => {
   const router = useRouter();
@@ -11,13 +12,19 @@ const Header: React.FC = () => {
 
   const { data: session, status } = useSession();
 
+  const handleNewPost = () => {
+    router.push("/create");
+  };
+
   let left = (
     <div className="left">
-      <Link href="/">
-        <a className="bold" data-active={isActive("/")}>
-          Feed
-        </a>
-      </Link>
+      {isActive("/feed") && (
+        <Link href="/">
+          <a className="bold" data-active={isActive("/feed")}>
+            Feed
+          </a>
+        </Link>
+      )}
       <style jsx>{`
         .bold {
           font-weight: bold;
@@ -86,9 +93,12 @@ const Header: React.FC = () => {
   if (!session) {
     right = (
       <div className="right">
-        <Link href="/api/auth/signin">
-          <a data-active={isActive("/signup")}>Log in</a>
-        </Link>
+        <Button
+          name="Log in"
+          onClick={() => router.push("/api/auth/signin")}
+          type="button"
+          buttonType="primary"
+        />
         <style jsx>{`
           a {
             text-decoration: none;
@@ -117,11 +127,13 @@ const Header: React.FC = () => {
   if (session) {
     left = (
       <div className="left">
-        <Link href="/">
-          <a className="bold" data-active={isActive("/")}>
-            Feed
-          </a>
-        </Link>
+        {isActive("/feed") && (
+          <Link href="/feed">
+            <a className="bold" data-active={isActive("/feed")}>
+              Feed
+            </a>
+          </Link>
+        )}
         <Link href="/drafts">
           <a data-active={isActive("/drafts")}>My drafts</a>
         </Link>
@@ -148,18 +160,28 @@ const Header: React.FC = () => {
     );
     right = (
       <div className="right">
-        <p>
-          {session.user.name} ({session.user.email})
-        </p>
-        <Link href="/create">
-          <button>
-            <a>New post</a>
-          </button>
-        </Link>
-        <button onClick={() => signOut()}>
-          <a>Log out</a>
-        </button>
+        <div className="rightNav">
+          <p>
+            {session.user.name} ({session.user.email})
+          </p>
+          <Button
+            type="button"
+            name="New Post"
+            buttonType="secondary"
+            onClick={handleNewPost}
+          />
+          <Button
+            type="button"
+            name="Log out"
+            buttonType="primary"
+            onClick={() => signOut()}
+          />
+        </div>
         <style jsx>{`
+          .rightNav {
+            display: flex;
+            gap: 1rem;
+          }
           a {
             text-decoration: none;
             color: var(--geist-foreground);
@@ -185,10 +207,6 @@ const Header: React.FC = () => {
             padding: 0.5rem 1rem;
             border-radius: 3px;
           }
-
-          button {
-            border: none;
-          }
         `}</style>
       </div>
     );
@@ -198,10 +216,15 @@ const Header: React.FC = () => {
     <nav>
       {left}
       {right}
+      {/* FIXME: use rem */}
       <style jsx>{`
         nav {
+          position: relative;
+          background: white;
+          z-index: 1;
           display: flex;
           padding: 2rem;
+          height: 60px;
           align-items: center;
         }
       `}</style>
