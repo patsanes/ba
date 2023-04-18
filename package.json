@@ -1,17 +1,19 @@
 {
-  "name": "hello-next",
+  "name": "blog-announcements",
   "version": "1.0.0",
-  "description": "",
+  "description": "Blogs for the best country side",
   "scripts": {
     "dev": "next",
     "build": "next build",
     "start": "next start"
   },
   "keywords": [],
-  "author": "",
+  "author": "Patricia Sanes <psanesl93@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "@prisma/client": "^4.13.0",
     "next": "12.0.10",
+    "prisma": "^4.12.0",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-markdown": "8.0.0"
@@ -20,5 +22,6 @@
     "@types/node": "17.0.14",
     "@types/react": "17.0.38",
     "typescript": "4.5.5"
-  }
+  },
+  "main": "index.js"
 }
